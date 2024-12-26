@@ -1,6 +1,6 @@
 Please go to the official repositories of the systems for updated code:
 
-AdaQP - https://github.com/raywan-110/AdaQP/tree/master
+Vanilla Full-graph System - https://github.com/raywan-110/AdaQP/tree/master
 
 SAR - https://github.com/IntelLabs/SAR/tree/main
 
