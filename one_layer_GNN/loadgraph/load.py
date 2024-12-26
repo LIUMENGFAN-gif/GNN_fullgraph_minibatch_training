@@ -36,23 +36,9 @@ def process_reddit_dataset(raw_dir: str) -> DGLHeteroGraph:
     return graph, num_features, num_classes
 
 
-def process_synthetic_dataset(raw_dir, graph_name="powerlaw_graph"):
-    #download graph
-    basic_path=raw_dir+"/synthetic_graph2/"
-    graph_path=basic_path+graph_name+".bin"
-    graph_basic_name=graph_name.replace("_graph","")
-    data, _ = dgl.data.utils.load_graphs(graph_path)
-    graph = data[0]
-    train_idx = np.arange(graph.num_nodes())
-    #related info
-    num_features = graph.ndata["feat"].shape[1]
-    return graph, num_features, train_idx, None, None
-
 
 def load_graph(name: str, raw_dir: str, graph_name="powerlaw_graph") -> DGLHeteroGraph:
     if name=="ogbn-products":
         return process_obg_dataset(name, raw_dir)
     elif name=="reddit":
         return process_reddit_dataset(raw_dir)
-    elif name=="synthetic":
-        return process_synthetic_dataset(raw_dir, graph_name)

@@ -152,7 +152,7 @@ if __name__ == "__main__":
         in_feats = nfeat.shape[1]
         n_classes = (labels.max() + 1).item()
     elif args.name=='ogbn-arxiv':
-        data = DglNodePropPredDataset(name="ogbn-arxiv", root=args.raw_dir)
+        data = DglNodePropPredDataset(name="ogbn-arxiv", root="/nfs/mfliu/datasets")
         splitted_idx = data.get_idx_split()
         train_idx, val_idx, test_idx = (
             splitted_idx["train"],
@@ -160,7 +160,11 @@ if __name__ == "__main__":
             splitted_idx["test"],
         )
         graph, labels = data[0]
-        graph = dgl.add_self_loop(graph)
+        srcs, dsts = graph.all_edges()
+        graph.add_edges(dsts, srcs)
+
+        # add self-loop
+        graph = graph.remove_self_loop().add_self_loop()
         nfeat = graph.ndata.pop("feat")
         labels = labels[:, 0]
 
