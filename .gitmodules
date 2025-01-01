@@ -1,0 +1,3 @@
+[submodule "vanilla_fullgraph_system"]
+	path = vanilla_fullgraph_system
+	url = https://github.com/raywan-110/AdaQP.git
