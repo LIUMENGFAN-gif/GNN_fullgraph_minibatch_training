@@ -48,12 +48,11 @@ def run(args, device, data):
             F.relu,
         )
     model = model.to(device)
-    loss_fcn = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=args.lr)
     loss_list=[]
     for epoch in range(args.num_epochs):
         pred = model(g, nfeat)
-        loss = loss_fcn(pred[train_nid], new_labels[train_nid])
+        loss = F.binary_cross_entropy_with_logits(pred[train_nid], (labels[train_nid] + 1) / 2)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -142,6 +141,7 @@ if __name__ == "__main__":
         in_feats = nfeat.shape[1]
         n_classes = (labels.max() + 1).item()
     graph.create_formats_()
+    labels = th.where(labels < int(n_classes / 2), -th.ones_like(labels), th.ones_like(labels))
 
     # Pack data
     data = (

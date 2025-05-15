@@ -202,14 +202,6 @@ if __name__ == "__main__":
         n_classes = (labels.max() + 1).item()
     graph.create_formats_()
 
-    if args.split_ratio>0:
-        print(f"before split: train_nids: {train_idx.shape[0]}, test_nids: {test_idx.shape[0]}")
-        test_part_idx=int(test_idx.shape[0]*args.split_ratio)
-        new_test_nids = test_idx[test_part_idx:].clone()
-        new_train_nids = th.cat([train_idx, test_idx[:test_part_idx].clone()])
-        train_idx = new_train_nids
-        test_idx = new_test_nids
-        print(f"after split: train_nids: {new_train_nids.shape[0]}, test_nids: {new_test_nids.shape[0]}")
 
     # Pack data
     data = (
